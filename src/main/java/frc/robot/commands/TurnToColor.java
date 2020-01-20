@@ -8,30 +8,64 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.ColorWheel;
+import edu.wpi.first.wpilibj.DriverStation;
+
 
 public class TurnToColor extends CommandBase {
   /**
    * Creates a new TurnToColor.
    */
   ColorWheel colorWheel;
+  char targetColor;
+  int targetPos;
+  int startPos;
 
 
   public TurnToColor(ColorWheel m_ColorWheel) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(colorWheel);
     colorWheel = m_ColorWheel;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    /*targetColor = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
+    switch (targetColor){
+      case 'B' :
+      targetPos = Constants.bluePos;
+      break;
+    case 'G' :
+      targetPos = Constants.greenPos;
+      break;
+    case 'R' :
+      targetPos = Constants.redPos;
+      break;
+    case 'Y' :
+      targetPos = Constants.yellowPos;
+      break;
+    default :
+      cancel();
+      break;
+    }*/
+    targetPos = Constants.greenPos;
+    if(colorWheel.getColor() == 0){
+      cancel();
+    }else{
+      startPos = colorWheel.getColor();
+    }
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
+    colorWheel.moveNumberOfColors(targetPos - startPos);
+    /*if(error < 0.10){
+      cancel();
+    }*/
   }
 
   // Called once the command ends or is interrupted.

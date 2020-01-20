@@ -22,7 +22,7 @@ public class Drivetrain extends SubsystemBase {
   public final Victor rearRight = new Victor(Constants.rearRightWheel);
   public final Victor frontLeft = new Victor(Constants.frontLeftWheel);
   public final Victor frontRight = new Victor(Constants.frontRightWheel);
-  public final Gyro gyro = new AnalogGyro(Constants.gyro);
+  //public final Gyro gyro = new AnalogGyro(Constants.gyro);
 
   
   public Drivetrain() {

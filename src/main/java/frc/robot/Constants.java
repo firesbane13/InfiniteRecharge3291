@@ -24,7 +24,9 @@ public final class Constants {
     public static int colorMotor = 9;
 
     //PID Constants
-    public static int kPColorMotor = 3;
+    public static double kPColorMotor = 1.5;
+
+
     
     //Gyro port
     public static int gyro = 0;
@@ -37,6 +39,7 @@ public final class Constants {
     //Encoder Pulse Per Revolution
     public static double colorEncoderPPR = 500;
 
+    //Joystick Ports
     public static int Joystick1 = 0;
     public static int Joystick2 = 1;
     
@@ -47,6 +50,9 @@ public final class Constants {
     public static int yellowPos = 2;
     public static int bluePos = 3;
     public static int greenPos = 4;
+    
+    //Number of Turns
+    public static int numberOfWheelColors = 8;
 
 
 }

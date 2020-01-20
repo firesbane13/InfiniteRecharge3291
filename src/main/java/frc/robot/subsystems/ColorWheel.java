@@ -29,7 +29,12 @@ public class ColorWheel extends SubsystemBase {
     colorMotor = new VictorSP(Constants.colorMotor);
     wheelSensor = new ColorSensorV3(I2C.Port.kOnboard);
   }
-
+  public void resetEncoder(){
+    colorEncoder.reset();
+  }
+  public void printValues(){
+    System.out.println(colorEncoder.getDistance()*500);
+  }
   private double getMaxRatio(int a, int b){
     if(a/b > b/a){
       return a/b;
@@ -39,14 +44,16 @@ public class ColorWheel extends SubsystemBase {
   }
   
   //Feedback PID Control (Need to figure out Feed Forward)
-  public void moveNumberOfColors(int numberOfColors){
+  public double moveNumberOfColors(int numberOfColors){
     double error = numberOfColors - colorEncoder.getDistance();
-    while(error > 0){
-      colorMotor.set(Constants.kPColorMotor*error);
-    }
+    colorMotor.set(-Constants.kPColorMotor*error);
+    return error;
+  }
+  public void moveColorMotor(double power){
+    colorMotor.set(power);
   }
 
-  public Integer getColor(){
+  public int getColor(){
     int r = wheelSensor.getRed();
     int g = wheelSensor.getGreen();
     int b = wheelSensor.getBlue();
@@ -62,6 +69,6 @@ public class ColorWheel extends SubsystemBase {
     }if(g > r && g > b && rbRatio  < rgRatio && rbRatio < gbRatio){
       return Constants.greenPos;
     }
-    else return null;
+    else return 0;
   }
 }

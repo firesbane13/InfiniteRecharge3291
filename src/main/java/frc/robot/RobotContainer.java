@@ -11,7 +11,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RotateColorWheel;
 import frc.robot.commands.TankDrive;
+import frc.robot.commands.TurnToColor;
+import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,14 +27,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  //Robot Subystems 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain drivetrain = new Drivetrain();
+  public ColorWheel colorWheel = new ColorWheel();
+
+
   public static  Joystick joystick1 = new Joystick(Constants.Joystick1);
   public static  Joystick joystick2 = new Joystick(Constants.Joystick2);
 
-//
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  //Robot Commands
+  /*private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final TurnToColor turnToColor = new TurnToColor(colorWheel);
+  private final RotateColorWheel rotateColorWheel = new RotateColorWheel(colorWheel, 1);*/
 
 
 
@@ -60,7 +68,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return new TurnToColor(colorWheel);
   }
   public Command getDriveTrain(){
     return new TankDrive(drivetrain, joystick1, joystick2);
