@@ -21,6 +21,8 @@ public class TurnToColor extends CommandBase {
   char targetColor;
   int targetPos;
   int startPos;
+  int distance;
+  int absDistance;
 
 
   public TurnToColor(ColorWheel m_ColorWheel) {
@@ -31,7 +33,7 @@ public class TurnToColor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    /*targetColor = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
+    targetColor = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
     switch (targetColor){
       case 'B' :
       targetPos = Constants.bluePos;
@@ -48,21 +50,25 @@ public class TurnToColor extends CommandBase {
     default :
       cancel();
       break;
-    }*/
-    targetPos = Constants.greenPos;
+    }
+    //targetPos = Constants.greenPos;
     if(colorWheel.getColor() == 0){
       cancel();
     }else{
       startPos = colorWheel.getColor();
     }
-    
+    distance = targetPos - startPos;
+    absDistance = Math.abs(distance);
+    if(absDistance > Constants.numOfColors/2){
+      distance = (absDistance/distance)*(Constants.numOfColors - absDistance);
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    colorWheel.moveNumberOfColors(targetPos - startPos);
+    
+    colorWheel.moveNumberOfColors(distance);
     /*if(error < 0.10){
       cancel();
     }*/

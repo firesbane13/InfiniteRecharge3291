@@ -25,6 +25,7 @@ public final class Constants {
 
     //PID Constants
     public static double kPColorMotor = 1.5;
+    public static double kIColorMotor = 0;
 
 
     
@@ -50,6 +51,7 @@ public final class Constants {
     public static int yellowPos = 2;
     public static int bluePos = 3;
     public static int greenPos = 4;
+    public static int numOfColors = 4;
     
     //Number of Turns
     public static int numberOfWheelColors = 8;

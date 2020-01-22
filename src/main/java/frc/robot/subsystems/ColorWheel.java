@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -20,14 +22,16 @@ public class ColorWheel extends SubsystemBase {
    * Creates a new ColorWheel.
    */
   private Encoder colorEncoder;
-  private VictorSP colorMotor;
+  private VictorSPX colorMotor;
   private ColorSensorV3 wheelSensor;
+  private double errorSum;
 
   public ColorWheel() {
     colorEncoder = new Encoder(Constants.colorEncoder[0], Constants.colorEncoder[1]);
     colorEncoder.setDistancePerPulse(1/Constants.colorEncoderPPR);
-    colorMotor = new VictorSP(Constants.colorMotor);
+    colorMotor = new VictorSPX(0);
     wheelSensor = new ColorSensorV3(I2C.Port.kOnboard);
+    errorSum = 0;
   }
   public void resetEncoder(){
     colorEncoder.reset();
@@ -46,11 +50,14 @@ public class ColorWheel extends SubsystemBase {
   //Feedback PID Control (Need to figure out Feed Forward)
   public double moveNumberOfColors(int numberOfColors){
     double error = numberOfColors - colorEncoder.getDistance();
-    colorMotor.set(-Constants.kPColorMotor*error);
+    errorSum += error;
+
+    //colorMotor.setVoltage(-(Constants.kPColorMotor*error + Constants.kIColorMotor*errorSum));
+    colorMotor.set(ControlMode.PercentOutput, 1);
     return error;
   }
   public void moveColorMotor(double power){
-    colorMotor.set(power);
+    //colorMotor.set(power);
   }
 
   public int getColor(){

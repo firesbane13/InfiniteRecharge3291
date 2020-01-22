@@ -37,7 +37,7 @@ public class RotateColorWheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    colorWheel.moveNumberOfColors(1);
+    colorWheel.moveNumberOfColors(Constants.numberOfWheelColors*numberOfRotations);
     /*if(error < 0.1 && error > -0.1){
 
     }*/

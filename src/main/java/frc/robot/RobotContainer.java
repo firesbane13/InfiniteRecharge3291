@@ -30,7 +30,7 @@ public class RobotContainer {
   //Robot Subystems 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain drivetrain = new Drivetrain();
-  public ColorWheel colorWheel = new ColorWheel();
+  //public ColorWheel colorWheel = new ColorWheel();
 
 
   public static  Joystick joystick1 = new Joystick(Constants.Joystick1);
@@ -68,7 +68,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new TurnToColor(colorWheel);
+    //return new TurnToColor(colorWheel);
+    return new ExampleCommand(m_exampleSubsystem);
   }
   public Command getDriveTrain(){
     return new TankDrive(drivetrain, joystick1, joystick2);

@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,10 +19,10 @@ public class Drivetrain extends SubsystemBase {
   /**
    * Creates a new drivetrain.
    */
-  public final Victor rearLeft = new Victor(Constants.rearLeftWheel);
-  public final Victor rearRight = new Victor(Constants.rearRightWheel);
-  public final Victor frontLeft = new Victor(Constants.frontLeftWheel);
-  public final Victor frontRight = new Victor(Constants.frontRightWheel);
+  public final Spark rearLeft = new Spark(Constants.rearLeftWheel);
+  public final Spark rearRight = new Spark(Constants.rearRightWheel);
+  public final Spark frontLeft = new Spark(Constants.frontLeftWheel);
+  public final Spark frontRight = new Spark(Constants.frontRightWheel);
   //public final Gyro gyro = new AnalogGyro(Constants.gyro);
 
   
@@ -34,10 +35,11 @@ public class Drivetrain extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   public void drive(double leftPower, double rightPower){
-    rearLeft.set(-leftPower*0.75);
-    frontLeft.set(-leftPower*0.75);
-    rearRight.set(rightPower*0.75);
-    frontRight.set(rightPower*0.75);
-    
+    rearLeft.set(-leftPower*0.25);
+    frontLeft.set(-leftPower*0.25);
+    rearRight.set(rightPower*0.25);
+    frontRight.set(rightPower*0.25);
   }
 }
+
+
