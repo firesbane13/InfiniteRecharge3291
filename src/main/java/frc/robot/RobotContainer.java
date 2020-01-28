@@ -10,13 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RotateColorWheel;
 import frc.robot.commands.TankDrive;
+import frc.robot.commands.TurnRobotDegrees;
 import frc.robot.commands.TurnToColor;
 import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -28,17 +27,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class RobotContainer {
   //Robot Subystems 
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain drivetrain = new Drivetrain();
-  //public ColorWheel colorWheel = new ColorWheel();
+  public ColorWheel colorWheel = new ColorWheel();
 
 
   public static  Joystick joystick1 = new Joystick(Constants.Joystick1);
   public static  Joystick joystick2 = new Joystick(Constants.Joystick2);
 
   //Robot Commands
-  /*private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final TurnToColor turnToColor = new TurnToColor(colorWheel);
+  /*private final TurnToColor turnToColor = new TurnToColor(colorWheel);
   private final RotateColorWheel rotateColorWheel = new RotateColorWheel(colorWheel, 1);*/
 
 
@@ -68,8 +65,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    //return new TurnToColor(colorWheel);
-    return new ExampleCommand(m_exampleSubsystem);
+    return new RotateColorWheel(colorWheel, drivetrain, 3);
+    //return new TurnRobotDegrees(drivetrain, 90);
   }
   public Command getDriveTrain(){
     return new TankDrive(drivetrain, joystick1, joystick2);

@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ColorWheel;
+import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.DriverStation;
 
 
@@ -23,17 +24,19 @@ public class TurnToColor extends CommandBase {
   int startPos;
   int distance;
   int absDistance;
+  Drivetrain m_drive;
 
 
-  public TurnToColor(ColorWheel m_ColorWheel) {
+  public TurnToColor(ColorWheel m_ColorWheel, Drivetrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     colorWheel = m_ColorWheel;
+    m_drive = drive;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    targetColor = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
+    /*targetColor = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
     switch (targetColor){
       case 'B' :
       targetPos = Constants.bluePos;
@@ -50,8 +53,9 @@ public class TurnToColor extends CommandBase {
     default :
       cancel();
       break;
-    }
-    //targetPos = Constants.greenPos;
+    }*/
+    
+    targetPos = Constants.greenPos;
     if(colorWheel.getColor() == 0){
       cancel();
     }else{
@@ -60,7 +64,7 @@ public class TurnToColor extends CommandBase {
     distance = targetPos - startPos;
     absDistance = Math.abs(distance);
     if(absDistance > Constants.numOfColors/2){
-      distance = (absDistance/distance)*(Constants.numOfColors - absDistance);
+      distance = -(absDistance/distance)*(Constants.numOfColors - absDistance);
     }
   }
 

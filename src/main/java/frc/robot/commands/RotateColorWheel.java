@@ -7,23 +7,26 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ColorWheel;
+import frc.robot.subsystems.Drivetrain;
 
 public class RotateColorWheel extends CommandBase {
   /**
    * Creates a new MoveColorWheel.
    */
   ColorWheel colorWheel;
-  int numberOfRotations;
+  double numberOfRotations;
+  Drivetrain drive;
 
   
-  public RotateColorWheel(ColorWheel kColorWheel, int kNumberOfRotations) {
+  public RotateColorWheel(ColorWheel kColorWheel, Drivetrain m_drive,  double kNumberOfRotations) {
     // Use addRequirements() here to declare subsystem dependencies.
     colorWheel = kColorWheel;
     numberOfRotations = kNumberOfRotations;
+    drive = m_drive;
+    
   }
 
   // Called when the command is initially scheduled.
@@ -41,14 +44,14 @@ public class RotateColorWheel extends CommandBase {
     /*if(error < 0.1 && error > -0.1){
 
     }*/
+    drive.drive(-0.15, -0.15);
     
-    colorWheel.printValues();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    colorWheel.moveColorMotor(0);
+    colorWheel.moveColorWheelMotor(0);
   }
 
   // Returns true when the command should end.

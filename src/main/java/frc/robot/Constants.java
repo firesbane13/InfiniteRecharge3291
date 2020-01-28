@@ -17,17 +17,18 @@ package frc.robot;
  */
 public final class Constants {
     //Motor Ports
-    public static int rearLeftWheel = 0;
-    public static int frontLeftWheel = 1;
+    public static int rearLeftWheel = 1;
+    public static int frontLeftWheel =0;
     public static int rearRightWheel = 2;
     public static int frontRightWheel = 3;
     public static int colorMotor = 9;
 
     //PID Constants
-    public static double kPColorMotor = 1.5;
+    public static double kPColorMotor = 5;
     public static double kIColorMotor = 0;
 
-
+    //Friction Constants
+    public static double colorWheelFriction = 1.1;
     
     //Gyro port
     public static int gyro = 0;

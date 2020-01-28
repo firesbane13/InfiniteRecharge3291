@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ColorWheel;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -24,9 +25,10 @@ import frc.robot.subsystems.ColorWheel;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private Command tankDrive;
-  Gyro gyro;
+  //Gyro gyro;
 
   private RobotContainer m_robotContainer;
+  Drivetrain drivetrain;
 
 
 
@@ -43,8 +45,9 @@ public class Robot extends TimedRobot {
       m_robotContainer = new RobotContainer();
 
 
-      gyro = new AnalogGyro(0);
-     
+      //gyro = new AnalogGyro(0);
+      //drivetrain = new Drivetrain();
+      
       
     }
 
@@ -62,8 +65,10 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    //System.out.println(m_robotContainer.colorWheel.getColor());
-    
+    //m_robotContainer.colorWheel.printRGB();
+    //System.out.println(drivetrain.getGyro().getAngle());
+    //System.out.print(DriverStation.getInstance().getAlliance());
+    //System.out.println(" " + DriverStation.getInstance().getLocation());
   }
 
   /**

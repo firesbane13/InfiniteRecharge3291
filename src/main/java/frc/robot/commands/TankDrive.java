@@ -25,7 +25,7 @@ public class TankDrive extends CommandBase {
     m_drive = drive;
     j1 = m_j1;
     j2 = m_j2;
-    addRequirements(drive);
+    //addRequirements(drive);
   }
 
   // Called when the command is initially scheduled.
@@ -36,12 +36,22 @@ public class TankDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.drive(j1.getY(), j2.getY());
+    double rotateSpeed = m_drive.getGyro().getAngle()/360;
+    if(Math.abs(j1.getY() - j2.getY()) > 0.35){
+      m_drive.getGyro().reset();
+      m_drive.drive(j1.getY(), j2.getY());
+    }else{
+
+      m_drive.drive(j1.getY() + rotateSpeed, j2.getY() - rotateSpeed);
+      
+    }
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_drive.drive(0, 0);
   }
 
   // Returns true when the command should end.
