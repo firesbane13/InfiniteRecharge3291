@@ -36,16 +36,16 @@ public class TankDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double rotateSpeed = m_drive.getGyro().getAngle()/360;
+    /*double rotateSpeed = m_drive.getGyro().getAngle()/360;
     if(Math.abs(j1.getY() - j2.getY()) > 0.35){
       m_drive.getGyro().reset();
-      m_drive.drive(j1.getY(), j2.getY());
+      m_drive.drive(j1.getY()*0.5, j2.getY()*0.5);
     }else{
 
-      m_drive.drive(j1.getY() + rotateSpeed, j2.getY() - rotateSpeed);
+      m_drive.drive((j1.getY() + rotateSpeed)*0.5, j2.getY() - rotateSpeed);
       
-    }
-
+    }*/
+    m_drive.drive(j1.getY()*0.5, j2.getY()*0.5);
   }
 
   // Called once the command ends or is interrupted.

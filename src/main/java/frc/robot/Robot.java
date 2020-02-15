@@ -9,10 +9,13 @@ package frc.robot;
 
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.Drivetrain;
 
@@ -30,8 +33,6 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   Drivetrain drivetrain;
 
-
-
   
 
   /**
@@ -47,7 +48,8 @@ public class Robot extends TimedRobot {
 
       //gyro = new AnalogGyro(0);
       //drivetrain = new Drivetrain();
-      
+      CameraServer.getInstance().startAutomaticCapture();
+    
       
     }
 
@@ -69,6 +71,7 @@ public class Robot extends TimedRobot {
     //System.out.println(drivetrain.getGyro().getAngle());
     //System.out.print(DriverStation.getInstance().getAlliance());
     //System.out.println(" " + DriverStation.getInstance().getLocation());
+    
   }
 
   /**
@@ -116,6 +119,7 @@ public class Robot extends TimedRobot {
     tankDrive = m_robotContainer.getDriveTrain();
     tankDrive.schedule();
     //gyro.calibrate();
+    
 
   }
 

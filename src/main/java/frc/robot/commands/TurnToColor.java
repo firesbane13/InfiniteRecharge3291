@@ -72,10 +72,11 @@ public class TurnToColor extends CommandBase {
   @Override
   public void execute() {
     
-    colorWheel.moveNumberOfColors(distance);
+    System.out.println(colorWheel.moveNumberOfColors(distance));
     /*if(error < 0.10){
       cancel();
     }*/
+    m_drive.drive(-0.2, -0.2);
   }
 
   // Called once the command ends or is interrupted.

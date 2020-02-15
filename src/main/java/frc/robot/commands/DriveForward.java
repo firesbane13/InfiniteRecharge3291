@@ -7,56 +7,70 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.Drivetrain;
 
-public class RotateColorWheel extends CommandBase {
+public class DriveForward extends CommandBase {
   /**
-   * Creates a new MoveColorWheel.
+   * Creates a new DriveForward.
    */
-  ColorWheel colorWheel;
-  double numberOfRotations;
   Drivetrain drive;
-
+  double distance;
+  PIDController pidDrive;
+  PIDController pidTurn;
+  double maxPower;
+  boolean finished = false;
+  double time = 0;
   
-  public RotateColorWheel(ColorWheel kColorWheel, Drivetrain m_drive,  double kNumberOfRotations) {
+  public DriveForward(Drivetrain drive, double distance, double maxPower) {
     // Use addRequirements() here to declare subsystem dependencies.
-    colorWheel = kColorWheel;
-    numberOfRotations = kNumberOfRotations;
-    drive = m_drive;
+    this.drive = drive;
+    this.distance = distance;
+    this.maxPower = maxPower;
+    pidDrive = new PIDController(Constants.kPDrive, Constants.kIDrive, Constants.kDDrive);
+    pidTurn = new PIDController(11, 2, 0);
     
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //colorWheel.resetEncoder();
-    //colorWheel.moveColorMotor(-0.1);
-    
+    drive.resetEncoders();
+    drive.getGyro().reset();
+    time = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(colorWheel.moveNumberOfColors(Constants.numberOfWheelColors*numberOfRotations));
-    /*if(error < 0.1 && error > -0.1){
-
-    }*/
-    drive.drive(-0.15, -0.15);
     
+    double turnSpeed = pidTurn.calculate(drive.getGyro().getAngle(), 0)/360;
+    double driveSpeed = -pidDrive.calculate(drive.getDistance(), distance)/50;
+    if(Math.abs(driveSpeed) > maxPower){
+      driveSpeed = (Math.abs(driveSpeed)/ driveSpeed) * maxPower;
+    }
+    drive.drive(driveSpeed - turnSpeed, driveSpeed + turnSpeed);
+    if(Math.abs(driveSpeed) < 0.12){
+      time++;
+    }
+    if(time >= 15){
+      finished = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    colorWheel.moveColorWheelMotor(0);
+    drive.drive(0, 0);
+    Timer.delay(0.25);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return finished;
   }
 }

@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Autonomous.Auto1Test;
+import frc.robot.commands.DriveForward;
 import frc.robot.commands.RotateColorWheel;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.TurnRobotDegrees;
@@ -65,8 +67,11 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new RotateColorWheel(colorWheel, drivetrain, 3);
+    //return new RotateColorWheel(colorWheel, drivetrain, 1);
     //return new TurnRobotDegrees(drivetrain, 90);
+    return new Auto1Test(drivetrain);
+    //return new TurnToColor(colorWheel, drivetrain);
+    //return new DriveForward(drivetrain, 60);
   }
   public Command getDriveTrain(){
     return new TankDrive(drivetrain, joystick1, joystick2);
