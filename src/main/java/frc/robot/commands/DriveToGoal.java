@@ -7,51 +7,59 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.Drivetrain;
 
-public class RotateColorWheel extends CommandBase {
+public class DriveToGoal extends CommandBase {
   /**
-   * Creates a new MoveColorWheel.
+   * Creates a new DriveToGoal.
    */
-  ColorWheel colorWheel;
-  double numberOfRotations;
   Drivetrain drive;
-
-  
-  public RotateColorWheel(ColorWheel kColorWheel, Drivetrain m_drive,  double kNumberOfRotations) {
+  NetworkTable gripTable;
+  double centerX;
+  PIDController pidCamera;
+  public DriveToGoal(Drivetrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
-    colorWheel = kColorWheel;
-    numberOfRotations = kNumberOfRotations;
-    drive = m_drive;
-    
+    this.drive = drive;
+    CameraServer.getInstance().startAutomaticCapture();
+    gripTable = NetworkTableInstance.getDefault().getTable("GRIP/mycontoursReport");
+    pidCamera = new PIDController(Constants.kPCamera, Constants.kICamera, Constants.kDCamera);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    colorWheel.resetEncoder();
-    //colorWheel.moveColorMotor(-0.1);
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(colorWheel.moveNumberOfColors(Constants.numberOfWheelColors*numberOfRotations));
-    /*if(error < 0.1 && error > -0.1){
-
-    }*/
-    drive.drive(-0.15, -0.15);
+    centerX = 0;
+    double[] areaArray = gripTable.getEntry("area").getDoubleArray(new double[0]);
+    double max = -1;
+    int maxIndex = -1;
+    for(int i = 0; i<areaArray.length; i++){
+      if(areaArray[i] > max){
+        max = areaArray[i];
+        maxIndex = i;
+      }
+    }
+    if(maxIndex > 0)
+      centerX = gripTable.getEntry("centerX").getDoubleArray(new double[0])[maxIndex];
+    
+    double speed = -pidCamera.calculate(centerX, Constants.width/2);
+    drive.drive(0.25 - speed, 0.25 + speed);
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    colorWheel.moveColorWheelMotor(0);
   }
 
   // Returns true when the command should end.

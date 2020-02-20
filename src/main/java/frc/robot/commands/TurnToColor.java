@@ -36,8 +36,8 @@ public class TurnToColor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    /*targetColor = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
-    switch (targetColor){
+    targetColor = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
+    /*switch (targetColor){
       case 'B' :
       targetPos = Constants.bluePos;
       break;

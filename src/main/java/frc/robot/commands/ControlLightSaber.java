@@ -7,51 +7,49 @@
 
 package frc.robot.commands;
 
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.ColorWheel;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Climber;
 
-public class RotateColorWheel extends CommandBase {
+public class ControlLightSaber extends CommandBase {
   /**
-   * Creates a new MoveColorWheel.
+   * Creates a new ExtendLightSaber.
    */
-  ColorWheel colorWheel;
-  double numberOfRotations;
-  Drivetrain drive;
-
-  
-  public RotateColorWheel(ColorWheel kColorWheel, Drivetrain m_drive,  double kNumberOfRotations) {
+  Climber climb;
+  Joystick joystick;
+  double minSpeed =0;
+  double maxSpeed = 1;
+  double stallSpeed = 0.25;
+  public ControlLightSaber(Climber climb, Joystick joystick) {
     // Use addRequirements() here to declare subsystem dependencies.
-    colorWheel = kColorWheel;
-    numberOfRotations = kNumberOfRotations;
-    drive = m_drive;
-    
+    this.climb = climb;
+    this.joystick = joystick;
   }
+
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    colorWheel.resetEncoder();
-    //colorWheel.moveColorMotor(-0.1);
-    
+    double speed = joystick.getY();
+    if(speed < 0){
+      speed = 0;
+    }else if(speed > maxSpeed){
+      speed = maxSpeed;
+    }
+    climb.setLightSaberMotor(stallSpeed + speed);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(colorWheel.moveNumberOfColors(Constants.numberOfWheelColors*numberOfRotations));
-    /*if(error < 0.1 && error > -0.1){
-
-    }*/
-    drive.drive(-0.15, -0.15);
-    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    colorWheel.moveColorWheelMotor(0);
+    climb.setLightSaberMotor(0);
   }
 
   // Returns true when the command should end.

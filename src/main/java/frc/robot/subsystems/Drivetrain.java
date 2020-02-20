@@ -9,20 +9,10 @@ package frc.robot.subsystems;
 
 
 
-import java.time.*;
-import java.time.temporal.Temporal;
-
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Timer;
-//import edu.wpi.first.wpilibj.Victor;
-//import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -74,6 +64,7 @@ public class Drivetrain extends SubsystemBase {
     rearRight.set(rightPower);
     frontRight.set(rightPower);
   }
+  
   public void goToAngle(double speed, double angle){
       double error =  (angle -  gyro.getAngle());
       rearLeft.set(speed -error*Constants.kPGyro);

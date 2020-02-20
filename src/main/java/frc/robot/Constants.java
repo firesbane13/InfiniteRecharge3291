@@ -16,53 +16,78 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    //Motor Ports
-    public static int rearLeftWheel = 2;
-    public static int frontLeftWheel =3;
-    public static int rearRightWheel = 0;
-    public static int frontRightWheel = 1;
-    public static int colorMotor = 9;
+    /*Motor Ports*/
+        //drivetrain
+        public static int rearLeftWheel = 2;
+        public static int frontLeftWheel =3;
+        public static int rearRightWheel = 0;
+        public static int frontRightWheel = 1;
+        //color wheel
+        public static int colorWheelMotor = 2;
+        public static int colorMotor = 1;
+        //climber
+        public static int cim1 = 0;
+        public static int lightSaberMotor = 1;
+        public static int cim2 = 2;
 
-    //PID Constants
-    public static double kPColorMotor = 5;
-    public static double kIColorMotor = 0;
-    public static double kPGyro = 18;
-    public static double kIGyro = 0.0;
-    public static double kDGyro = 3.0;
-    public static double kPDrive = 1;
-    public static double kIDrive = 1.0;
-    public static double kDDrive = 0;
+        //low goal
+        public static int lowGoal = 0;
 
-    //Friction Constants
-    public static double colorWheelFriction = 1.2;
-    
-    //Gyro port
-    public static int gyro = 0;
-    
-    //Encoder Ports
-    public static int[] colorEncoder = {0, 1};
-    public static int[] leftEncoder = {2, 3};
-    public static int[] rightEncoder = {4, 5};
-
-    //Encoder Pulse Per Revolution
-    public static double colorEncoderPPR = 500;
-    public static double driveEncoderPPR = 360;
-
-    //Joystick Ports
-    public static int Joystick1 = 0;
-    public static int Joystick2 = 1;
-    
+    /*PID Constants*/
+        //Color Motor
+        public static double kPColorMotor = 5;
+        public static double kIColorMotor = 0;
+        public static double kDColorMotor = 0;
+        //Gyro
+        public static double kPGyro = 18;
+        public static double kIGyro = 0.0;
+        public static double kDGyro = 3.0;
+        //Encoder
+        public static double kPDrive = 1;
+        public static double kIDrive = 1.0;
+        public static double kDDrive = 0;
+        //Camera
+        public static double kPCamera = 1;
+        public static double kICamera = 0;
+        public static double kDCamera = 0;
 
 
-    //Color Positions for order of color wheel
-    public static int redPos = 1;
-    public static int yellowPos = 2;
-    public static int bluePos = 3;
-    public static int greenPos = 4;
-    public static int numOfColors = 4;
-    
-    //Number of colors on the color wheel
-    public static int numberOfWheelColors = 8;
+    /*Sensor Ports*/
+        //Gyro port
+        public static int gyro = 0;
+        
+        //Encoder Ports
+        public static int[] colorEncoder = {0, 1};
+        public static int[] leftEncoder = {2, 3};
+        public static int[] rightEncoder = {4, 5};
+
+
+    /*Joystick Ports*/
+        public static int Joystick1 = 0;
+        public static int Joystick2 = 1;
+        public static int Joystick3 = 2;
+        
+
+    /*Sensor Constants*/
+        //Color Positions for order of color wheel
+        public static int redPos = 1;
+        public static int yellowPos = 2;
+        public static int bluePos = 3;
+        public static int greenPos = 4;
+        public static int numOfColors = 4;
+        
+        //Number of colors on the color wheel
+        public static int numberOfWheelColors = 8;
+        
+        //Friction Constants
+        public static double colorWheelFriction = 1.2;
+        
+        //Encoder Pulse Per Revolution
+        public static double colorEncoderPPR = 500;
+        public static double driveEncoderPPR = 360;
+        //Camera Image Dimensions
+        public static double width = 640;
+        public static double height = 480;
 
 
 }

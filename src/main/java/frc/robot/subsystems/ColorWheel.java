@@ -9,10 +9,11 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.revrobotics.ColorMatch;
+
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.controller.PIDController;
 //import edu.wpi.first.wpilibj.util.Color;
 //import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -27,17 +28,16 @@ public class ColorWheel extends SubsystemBase {
   private VictorSPX colorWheelMotor;
   private VictorSPX colorMotor;
   private ColorSensorV3 wheelSensor;
-  private double errorSum;
-  private ColorMatch match;
+  private PIDController colorPid;
 
 
   public ColorWheel() {
     colorEncoder = new Encoder(Constants.colorEncoder[0], Constants.colorEncoder[1]);
     colorEncoder.setDistancePerPulse(1/(Constants.colorEncoderPPR*Constants.colorWheelFriction));
-    colorWheelMotor = new VictorSPX(0);
+    colorWheelMotor = new VictorSPX(Constants.colorWheelMotor);
+    colorMotor = new VictorSPX(Constants.colorMotor);
     wheelSensor = new ColorSensorV3(I2C.Port.kOnboard);
-    //match.addColorMatch(new Color(0.5, 0.5, 0.5));
-    errorSum = 0;
+    colorPid = new PIDController(Constants.kPColorMotor, Constants.kIColorMotor, Constants.kDColorMotor);
   }
   @Override
   public void periodic() {
@@ -62,9 +62,8 @@ public class ColorWheel extends SubsystemBase {
   //Feedback PID Control 
   public double moveNumberOfColors(double numberOfColors){
     double error = numberOfColors - colorEncoder.getDistance();
-    errorSum += error;
-    //colorMotor.setVoltage(-(Constants.kPColorMotor*error + Constants.kIColorMotor*errorSum));
-    colorWheelMotor.set(ControlMode.PercentOutput, -(Constants.kPColorMotor*error/* + Constants.kIColorMotor*errorSum*/));
+    //colorWheelMotor.set(ControlMode.PercentOutput, -(Constants.kPColorMotor*error));
+    colorWheelMotor.set(ControlMode.PercentOutput, -colorPid.calculate(colorEncoder.getDistance(), numberOfColors));
     return error;
   }
 
@@ -83,16 +82,16 @@ public class ColorWheel extends SubsystemBase {
     double gbRatio = getMaxRatio(g, b);
     //if senses blue
      if(gbRatio < rbRatio && gbRatio < rgRatio){
-      return Constants.bluePos;
+      return Constants.redPos;
     //if senses red
     }else if(rgRatio < gbRatio && rgRatio < rbRatio && r > g){
-      return Constants.redPos;
+      return Constants.bluePos;
     //if senses yellow
     }else if(rgRatio < gbRatio && rgRatio < rbRatio && r < g){
-      return Constants.yellowPos;
+      return Constants.greenPos;
     //if senses green
     }if(g > r && g > b && rbRatio  < rgRatio && rbRatio < gbRatio){
-      return Constants.greenPos;
+      return Constants.yellowPos;
     }
     else return 0;
   }

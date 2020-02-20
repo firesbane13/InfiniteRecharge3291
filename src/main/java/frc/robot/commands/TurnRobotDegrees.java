@@ -7,9 +7,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
@@ -43,14 +41,16 @@ public class TurnRobotDegrees extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    //
     double turnSpeed = pidTurn.calculate(m_drive.getGyro().getAngle(), desiredAngle)/360;
+    //Limits the max speed of the motor
     if(Math.abs(turnSpeed) > maxPower){
       turnSpeed = (Math.abs(turnSpeed)/turnSpeed)*maxPower;
     }
     System.out.println(turnSpeed);
     m_drive.drive(-turnSpeed, turnSpeed);
-    
+
+    //Handles canceling the command when the error i
     if(Math.abs(turnSpeed) < 0.12){
       time++;
     }

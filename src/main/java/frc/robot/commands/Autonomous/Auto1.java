@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.Autonomous;
+package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.DriveForward;
@@ -15,18 +15,21 @@ import frc.robot.subsystems.Drivetrain;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class Auto1Test extends SequentialCommandGroup {
+public class Auto1 extends SequentialCommandGroup {
   /**
    * Creates a new Auto1Test.
    */
-  public Auto1Test(Drivetrain drive) {
+  public Auto1(Drivetrain drive) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-      new TurnRobotDegrees(drive, 90, 0.75), 
-      new DriveForward(drive, 100, 0.75), 
-      new TurnRobotDegrees(drive, 180, 0.5), 
-      new DriveForward(drive, 100, 0.75),
-      new TurnRobotDegrees(drive, 90, 0.75));
+      new DriveForward(drive, 90, 0.75), 
+      new TurnRobotDegrees(drive, 90, 0.5), 
+      new DriveForward(drive, 141.5, 0.75),
+      new TurnRobotDegrees(drive, -90, 0.5),
+      new DriveForward(drive, 30, 0.75),
+      //Place balls
+      new TurnRobotDegrees(drive, -45, 0.75),
+      new DriveForward(drive, -170, 0.75));
   }
 }
