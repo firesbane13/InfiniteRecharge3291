@@ -42,16 +42,19 @@ public class ColorWheel extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // System.out.println("R: " + wheelSensor.getRed() + " G: " + wheelSensor.getGreen() + "B: " +  wheelSensor.getBlue());
+    System.out.println("R: " + wheelSensor.getRed() + " G: " + wheelSensor.getGreen() + " B: " +  wheelSensor.getBlue());
     //System.out.println(colorEncoder.getDistance()/8);
     //System.out.println(errorSum);
-    //System.out.println(getColor());
+    System.out.println(getColor());
   }
 
   public void resetEncoder(){
     colorEncoder.reset();
   }
   private double getMaxRatio(int a, int b){
+    if(a ==0 || b==0){
+      return 0;      
+    }
     if(a/b > b/a){
       return a/b;
     }else{
@@ -61,9 +64,9 @@ public class ColorWheel extends SubsystemBase {
   
   //Feedback PID Control 
   public double moveNumberOfColors(double numberOfColors){
-    double error = numberOfColors - colorEncoder.getDistance();
+    double error = colorPid.calculate(colorEncoder.getDistance(), numberOfColors);
     //colorWheelMotor.set(ControlMode.PercentOutput, -(Constants.kPColorMotor*error));
-    colorWheelMotor.set(ControlMode.PercentOutput, -colorPid.calculate(colorEncoder.getDistance(), numberOfColors));
+    colorWheelMotor.set(ControlMode.PercentOutput, error);
     return error;
   }
 
@@ -82,16 +85,16 @@ public class ColorWheel extends SubsystemBase {
     double gbRatio = getMaxRatio(g, b);
     //if senses blue
      if(gbRatio < rbRatio && gbRatio < rgRatio){
-      return Constants.redPos;
+      return Constants.yellowPos;
     //if senses red
     }else if(rgRatio < gbRatio && rgRatio < rbRatio && r > g){
-      return Constants.bluePos;
+      return Constants.greenPos;
     //if senses yellow
     }else if(rgRatio < gbRatio && rgRatio < rbRatio && r < g){
-      return Constants.greenPos;
+      return Constants.redPos;
     //if senses green
     }if(g > r && g > b && rbRatio  < rgRatio && rbRatio < gbRatio){
-      return Constants.yellowPos;
+      return Constants.bluePos;
     }
     else return 0;
   }

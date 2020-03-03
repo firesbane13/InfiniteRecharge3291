@@ -26,7 +26,6 @@ public class Drivetrain extends SubsystemBase {
   public final Spark frontRight = new Spark(Constants.frontRightWheel);
   public final Encoder leftEncoder = new Encoder(Constants.leftEncoder[0], Constants.leftEncoder[1]);
   public final Encoder rightEncoder = new Encoder(Constants.rightEncoder[0], Constants.rightEncoder[1]);
-
   public final Gyro gyro = new AnalogGyro(Constants.gyro);
   double angleFromStart = 0;
   double currTime = 0;
@@ -65,12 +64,11 @@ public class Drivetrain extends SubsystemBase {
     frontRight.set(rightPower);
   }
   
-  public void goToAngle(double speed, double angle){
-      double error =  (angle -  gyro.getAngle());
-      rearLeft.set(speed -error*Constants.kPGyro);
-      frontLeft.set(speed-error*Constants.kPGyro);
-      rearRight.set(speed + error*Constants.kPGyro);
-      frontRight.set(speed + error*Constants.kPGyro);
+  public void arcadeDrive(double speed, double turn){
+    rearLeft.set(speed + turn);
+    frontLeft.set(speed + turn);
+    rearRight.set(speed - turn);
+    frontRight.set(speed - turn);
   }
   public void driveForward(double speed){
   

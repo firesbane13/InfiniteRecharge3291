@@ -27,8 +27,8 @@ public class UnReadyColorMotor extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    color.turnColorMotor(-0.75);
-    Timer.delay(1);
+    color.turnColorMotor(0.75);
+    Timer.delay(1.25);
     color.turnColorMotor(0);
   }
 }

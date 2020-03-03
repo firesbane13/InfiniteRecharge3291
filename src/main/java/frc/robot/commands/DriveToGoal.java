@@ -52,7 +52,7 @@ public class DriveToGoal extends CommandBase {
     if(maxIndex > 0)
       centerX = gripTable.getEntry("centerX").getDoubleArray(new double[0])[maxIndex];
     
-    double speed = -pidCamera.calculate(centerX, Constants.width/2);
+    double speed = -pidCamera.calculate(centerX, Constants.width/2)/Constants.width;
     drive.drive(0.25 - speed, 0.25 + speed);
     
   }

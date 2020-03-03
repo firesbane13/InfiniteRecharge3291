@@ -5,28 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Autonomous.FastAuto;
+package frc.robot.commands.Autonomous.CommandGroups.FastAuto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.DriveForward;
-import frc.robot.commands.TurnRobotDegrees;
+import frc.robot.commands.Autonomous.*;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.LowGoal;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class FastAuto2 extends SequentialCommandGroup {
+public class FastAuto1 extends SequentialCommandGroup {
   /**
-   * Creates a new FastAuto2.
+   * Creates a new FastAuto1.
    */
-  public FastAuto2(Drivetrain drive) {
+  public FastAuto1(Drivetrain drive, LowGoal dropper) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-      new TurnRobotDegrees(drive, 36.972, 0.75), 
-      new DriveForward(drive, 112.5, 0.75),
-      new TurnRobotDegrees(drive, -36.972, 0.75),
-      //Place balls
+      new TurnRobotDegrees(drive, 57.542, 0.75), 
+      new DriveForward(drive, 167.697, 0.75),
+      new TurnRobotDegrees(drive, -57.542, 0.75),
+      new AutoDropper(dropper),
       new TurnRobotDegrees(drive, 135, 0.75),
       new DriveForward(drive, 125, 0.75));
   }

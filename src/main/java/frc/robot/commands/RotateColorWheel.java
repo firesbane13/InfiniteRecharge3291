@@ -19,6 +19,8 @@ public class RotateColorWheel extends CommandBase {
   ColorWheel colorWheel;
   double numberOfRotations;
   Drivetrain drive;
+  double time;
+  boolean finished = false;
 
   
   public RotateColorWheel(ColorWheel kColorWheel, Drivetrain m_drive,  double kNumberOfRotations) {
@@ -26,13 +28,15 @@ public class RotateColorWheel extends CommandBase {
     colorWheel = kColorWheel;
     numberOfRotations = kNumberOfRotations;
     drive = m_drive;
-    
+    finished = false;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    finished = false;
     colorWheel.resetEncoder();
+    time = 0;
     //colorWheel.moveColorMotor(-0.1);
     
   }
@@ -40,11 +44,15 @@ public class RotateColorWheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(colorWheel.moveNumberOfColors(Constants.numberOfWheelColors*numberOfRotations));
-    /*if(error < 0.1 && error > -0.1){
+    double error = colorWheel.moveNumberOfColors(Constants.numberOfWheelColors*numberOfRotations);
+    System.out.println(error);
+    if(Math.abs(error) < 0.12){
+      time++;
+    }
+    if(time >= 7){
+      finished = true;
+    }
 
-    }*/
-    drive.drive(-0.15, -0.15);
     
   }
 
@@ -57,6 +65,6 @@ public class RotateColorWheel extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return finished;
   }
 }

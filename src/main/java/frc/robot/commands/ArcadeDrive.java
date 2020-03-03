@@ -7,50 +7,38 @@
 
 package frc.robot.commands;
 
-
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Drivetrain;
 
-public class ControlLightSaber extends CommandBase {
+public class ArcadeDrive extends CommandBase {
   /**
-   * Creates a new ExtendLightSaber.
+   * Creates a new ArcadeDrive.
    */
-  Climber climb;
-  Joystick joystick;
-  double minSpeed =0;
-  double maxSpeed = 0;
-  double stallSpeed = 0.1;
-  public ControlLightSaber(Climber climb, Joystick joystick) {
+  XboxController controller;
+  Drivetrain drive;
+  public ArcadeDrive(Drivetrain drive, XboxController controller) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.climb = climb;
-    this.joystick = joystick;
+    this.drive = drive;
+    this.controller = controller;
   }
-
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
- 
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = joystick.getY()*0.8;
-    /*if(speed < -0.5){
-      speed = 0;
-    }else if(speed > maxSpeed){
-      speed = maxSpeed;
-    }*/
-    climb.setLightSaberMotor(stallSpeed + speed);
+    drive.arcadeDrive(controller.getY(Hand.kLeft), controller.getX(Hand.kRight));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    climb.setLightSaberMotor(0);
   }
 
   // Returns true when the command should end.

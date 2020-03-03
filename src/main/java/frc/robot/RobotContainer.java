@@ -9,6 +9,7 @@ package frc.robot;
 
 
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.commands.Autonomous.CommandGroups.*;
 import frc.robot.commands.Autonomous.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.Climber;
@@ -51,9 +52,10 @@ public class RobotContainer {
     
     //Climb Commands
     Button controlLightSaber = new JoystickButton(joystick3, 7);
+    //Button StopClimb = new JoystickButton (joystick3,5);
     Button climb = new JoystickButton(joystick3, 3); 
     controlLightSaber.toggleWhenPressed(new ControlLightSaber(climber, joystick3));
-    climb.whenPressed(new Climb(climber));
+    climb.toggleWhenPressed(new Climb(climber));
     
     //Color Wheel Commands
     Button readyColorMotor = new JoystickButton(joystick3, 9);
@@ -77,16 +79,15 @@ public class RobotContainer {
   }
 
 
-  public Command getAutonomousCommand(int location) {
+  public Command getAutonomousCommand(AutoEnum auto) {
 
-    if(location == 1){
-      return new Auto1(drivetrain);
-    }else if(location == 2){
-      return new Auto2(drivetrain);
-    }else{
-      return new Auto3(drivetrain);
+    if(auto == AutoEnum.FlexAuto) {
+      return new Auto1(drivetrain, lowGoal);
+    }else if(auto  == AutoEnum.StraightAuto){
+      return new Auto3(drivetrain, lowGoal);
+    }else {
+      return null;
     }
-    //return new ControlLightSaber(new Climber(), joystick3);
   }
 
   public Command getDriveTrain(){

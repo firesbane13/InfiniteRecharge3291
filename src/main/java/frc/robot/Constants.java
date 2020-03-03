@@ -18,8 +18,8 @@ package frc.robot;
 public final class Constants {
     /*Motor Ports*/
         //drivetrain
-        public static int rearLeftWheel = 2;
-        public static int frontLeftWheel =3;
+        public static int rearLeftWheel = 3;
+        public static int frontLeftWheel = 2;
         public static int rearRightWheel = 0;
         public static int frontRightWheel = 1;
         //color wheel
@@ -39,7 +39,7 @@ public final class Constants {
         public static double kIColorMotor = 0;
         public static double kDColorMotor = 0;
         //Gyro
-        public static double kPGyro = 18;
+        public static double kPGyro = 17.5;
         public static double kIGyro = 0.0;
         public static double kDGyro = 3.0;
         //Encoder
@@ -57,14 +57,14 @@ public final class Constants {
         public static int gyro = 0;
         
         //Encoder Ports
-        public static int[] colorEncoder = {0, 1};
-        public static int[] leftEncoder = {2, 3};
-        public static int[] rightEncoder = {4, 5};
+        public static int[] colorEncoder = {4, 5};
+        public static int[] leftEncoder = {0, 1};
+        public static int[] rightEncoder = {2, 3};
 
 
     /*Joystick Ports*/
-        public static int Joystick1 = 0;
-        public static int Joystick2 = 1;
+        public static int Joystick1 = 1;
+        public static int Joystick2 = 0;
         public static int Joystick3 = 2;
         
 
@@ -80,7 +80,7 @@ public final class Constants {
         public static int numberOfWheelColors = 8;
         
         //Friction Constants
-        public static double colorWheelFriction = 1.2;
+        public static double colorWheelFriction = 1;
         
         //Encoder Pulse Per Revolution
         public static double colorEncoderPPR = 500;

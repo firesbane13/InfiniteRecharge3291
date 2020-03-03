@@ -7,28 +7,26 @@
 
 package frc.robot.commands.Autonomous;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.DriveForward;
-import frc.robot.commands.TurnRobotDegrees;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Drivetrain;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class Auto2 extends SequentialCommandGroup {
-  /**
-   * Creates a new Auto2.
-   */
-  public Auto2(Drivetrain drive) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(new DriveForward(drive, 90, 0.75), 
-    new TurnRobotDegrees(drive, 90, 0.75), 
-    new DriveForward(drive, 67.75, 0.75),
-    new TurnRobotDegrees(drive, -90, 0.75),
-    new DriveForward(drive, 30, 0.75),
-    //Place balls
-    new TurnRobotDegrees(drive, -45, 0.75),
-    new DriveForward(drive, -170, 0.75));
+public class DriveTimed extends InstantCommand {
+  Drivetrain drive;
+  double time;
+  public DriveTimed(Drivetrain drive, double time) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.drive =drive;
+    this.time = time;
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    drive.drive(0.25, 0.25);
+    Timer.delay(time);
   }
 }

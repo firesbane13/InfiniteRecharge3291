@@ -25,6 +25,8 @@ public class TurnToColor extends CommandBase {
   int distance;
   int absDistance;
   Drivetrain m_drive;
+  int time;
+  boolean finished = false;
 
 
   public TurnToColor(ColorWheel m_ColorWheel, Drivetrain drive) {
@@ -37,6 +39,7 @@ public class TurnToColor extends CommandBase {
   @Override
   public void initialize() {
     targetColor = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
+    time = 0;
     /*switch (targetColor){
       case 'B' :
       targetPos = Constants.bluePos;
@@ -72,11 +75,17 @@ public class TurnToColor extends CommandBase {
   @Override
   public void execute() {
     
-    System.out.println(colorWheel.moveNumberOfColors(distance));
+    double error = colorWheel.moveNumberOfColors(distance);
+    if(Math.abs(error) < 0.12){
+      time++;
+    }
+    if(time >= 7){
+      finished = true;
+    }
     /*if(error < 0.10){
       cancel();
     }*/
-    m_drive.drive(-0.2, -0.2);
+    //m_drive.drive(-0.2, -0.2);
   }
 
   // Called once the command ends or is interrupted.
@@ -87,6 +96,6 @@ public class TurnToColor extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return finished;
   }
 }

@@ -25,7 +25,7 @@ public class ReadyColorMotor extends InstantCommand {
   @Override
   public void initialize() {
     color.turnColorMotor(-0.75);
-    Timer.delay(1);
+    Timer.delay(1.5);
     color.turnColorMotor(0);
   }
 

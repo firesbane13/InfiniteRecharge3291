@@ -45,7 +45,7 @@ public class TankDrive extends CommandBase {
       m_drive.drive((j1.getY() + rotateSpeed)*0.5, j2.getY() - rotateSpeed);
       
     }*/
-    m_drive.drive(j1.getY()*0.5, j2.getY()*0.5);
+    m_drive.drive(j1.getY()*1, j2.getY()*1);
   }
 
   // Called once the command ends or is interrupted.

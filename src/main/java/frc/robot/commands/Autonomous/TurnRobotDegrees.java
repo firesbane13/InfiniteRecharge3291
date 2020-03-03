@@ -5,58 +5,56 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Autonomous;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
 
-public class DriveForward extends CommandBase {
+public class TurnRobotDegrees extends CommandBase {
   /**
-   * Creates a new DriveForward.
+   * Creates a new AutoTest.
    */
-  Drivetrain drive;
-  double distance;
-  PIDController pidDrive;
+  private final Drivetrain m_drive;
+  double desiredAngle;
   PIDController pidTurn;
-  double maxPower;
   boolean finished = false;
-  double time = 0;
-  
-  public DriveForward(Drivetrain drive, double distance, double maxPower) {
+  double maxPower;
+  int time = 0;
+  public TurnRobotDegrees(Drivetrain drive, double degrees, double maxPower) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.drive = drive;
-    this.distance = distance;
+    m_drive = drive;
+    desiredAngle = degrees;
+    pidTurn = new PIDController(Constants.kPGyro, Constants.kIGyro, Constants.kDGyro);
     this.maxPower = maxPower;
-    pidDrive = new PIDController(Constants.kPDrive, Constants.kIDrive, Constants.kDDrive);
-    pidTurn = new PIDController(11, 2, 0);
-    
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drive.resetEncoders();
-    drive.getGyro().reset();
+    m_drive.getGyro().reset();
     time = 0;
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    double turnSpeed = pidTurn.calculate(drive.getGyro().getAngle(), 0)/360;
-    double driveSpeed = -pidDrive.calculate(drive.getDistance(), distance)/50;
-    if(Math.abs(driveSpeed) > maxPower){
-      driveSpeed = (Math.abs(driveSpeed)/ driveSpeed) * maxPower;
+    //
+    double turnSpeed = pidTurn.calculate(m_drive.getGyro().getAngle(), desiredAngle)/360;
+    //Limits the max speed of the motor
+    if(Math.abs(turnSpeed) > maxPower){
+      turnSpeed = (Math.abs(turnSpeed)/turnSpeed)*maxPower;
     }
-    drive.drive(driveSpeed - turnSpeed, driveSpeed + turnSpeed);
-    if(Math.abs(driveSpeed) < 0.12){
+    System.out.println(turnSpeed);
+    m_drive.drive(-turnSpeed, turnSpeed);
+
+    //Handles canceling the command when the error i
+    if(Math.abs(turnSpeed) < 0.12){
       time++;
     }
-    if(time >= 15){
+    if(time >= 8){
       finished = true;
     }
   }
@@ -64,8 +62,8 @@ public class DriveForward extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.drive(0, 0);
-    Timer.delay(0.25);
+    m_drive.drive(0, 0); 
+    finished = false;
   }
 
   // Returns true when the command should end.
