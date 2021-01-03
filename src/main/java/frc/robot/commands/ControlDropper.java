@@ -27,20 +27,24 @@ public class ControlDropper extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    /*
+      Defined for future use
+     */
   }
+
   @Override
   public void execute() {
     dropper.moveDropMotor(joystick.getY()*0.7);
     
   }
+  
   @Override
   public void end(boolean interrupted) {
     dropper.moveDropMotor(0);
   }
+  
   @Override
   public boolean isFinished() {
     return false;
   }
-
 }

@@ -5,10 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Autonomous.CommandGroups;
+package frc.robot.commands.autonomous.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Autonomous.*;
+import frc.robot.commands.autonomous.*;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.LowGoal;
 
@@ -21,13 +21,11 @@ public class Auto3 extends SequentialCommandGroup {
    */
   public Auto3(Drivetrain drive, LowGoal dropper) {
     // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
     super(
       new DriveForward(drive, 55, 0.75),
       new DriveTimed(drive, 2),
       new AutoDropper(dropper),
       new DriveForward(drive, -80, 0.75)
     );
-    
   }
 }

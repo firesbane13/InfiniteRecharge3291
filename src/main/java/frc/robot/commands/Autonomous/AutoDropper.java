@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -23,11 +23,14 @@ public class AutoDropper extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //Timer.delay(0.5);
     dropper.moveDropMotor(-0.75);
+
     Timer.delay(0.35);
+
     dropper.moveDropMotor(0.75);
+
     Timer.delay(0.75);
+
     dropper.moveDropMotor(0);
   }
 }

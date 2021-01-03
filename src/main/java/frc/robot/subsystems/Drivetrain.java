@@ -20,28 +20,31 @@ public class Drivetrain extends SubsystemBase {
   /**
    * Creates a new drivetrain.
    */
-  public final Spark rearLeft = new Spark(Constants.rearLeftWheel);
-  public final Spark rearRight = new Spark(Constants.rearRightWheel);
-  public final Spark frontLeft = new Spark(Constants.frontLeftWheel);
-  public final Spark frontRight = new Spark(Constants.frontRightWheel);
-  public final Encoder leftEncoder = new Encoder(Constants.leftEncoder[0], Constants.leftEncoder[1]);
-  public final Encoder rightEncoder = new Encoder(Constants.rightEncoder[0], Constants.rightEncoder[1]);
-  public final Gyro gyro = new AnalogGyro(Constants.gyro);
+  public final Spark rearLeft = new Spark(Constants.REAR_LEFT_WHEEL);
+  public final Spark rearRight = new Spark(Constants.REAR_RIGHT_WHEEL);
+  public final Spark frontLeft = new Spark(Constants.FRONT_LEFT_WHEEL);
+  public final Spark frontRight = new Spark(Constants.FRONT_RIGHT_WHEEL);
+  
+  protected int[] leftEncoderConst = Constants.getLeftEncoder();
+  protected int[] rightEncoderConst = Constants.getRightEncoder();
+
+  public final Encoder leftEncoder = new Encoder(leftEncoderConst[0], leftEncoderConst[1]);
+  public final Encoder rightEncoder = new Encoder(rightEncoderConst[0], rightEncoderConst[1]);
+  public final Gyro gyro = new AnalogGyro(Constants.GYRO);
   double angleFromStart = 0;
   double currTime = 0;
   double prevTime = 0;
-  public double leftSpeed;
-  public double rightSpeed;
+  protected double leftSpeed;
+  protected double rightSpeed;
 
-
-  
   public Drivetrain() {
-    //gyro.calibrate();
     gyro.reset();
     rearLeft.setInverted(true);
     frontLeft.setInverted(true);
-    leftEncoder.setDistancePerPulse(6*Math.PI/Constants.driveEncoderPPR);
-    rightEncoder.setDistancePerPulse(6*Math.PI/Constants.driveEncoderPPR);
+    leftEncoder.setDistancePerPulse(6 * Math.PI / Constants.DRIVE_ENCODER_PPR);
+    rightEncoder.setDistancePerPulse(6 * Math.PI / Constants.DRIVE_ENCODER_PPR);
+    leftSpeed = 0;
+    rightSpeed = 0;
   }
 
   @Override
@@ -51,13 +54,12 @@ public class Drivetrain extends SubsystemBase {
     currTime = System.nanoTime();
     double elapsedTime = currTime - prevTime;
     angleFromStart += gyro.getRate()*elapsedTime;
-    //System.out.println(gyro.getAngle());
+
     leftSpeed = -leftEncoder.getDistance();
     rightSpeed = rightEncoder.getDistance();
-    //System.out.println("Left: " + leftSpeed + " Right: " + rightSpeed);
   }
+
   public void drive(double leftPower, double rightPower){
-    
     rearLeft.set(leftPower);
     frontLeft.set(leftPower);
     rearRight.set(rightPower);
@@ -70,15 +72,16 @@ public class Drivetrain extends SubsystemBase {
     rearRight.set(speed - turn);
     frontRight.set(speed - turn);
   }
-  public void driveForward(double speed){
   
-    drive(speed+(leftSpeed-rightSpeed)*0.01, speed-(leftSpeed-rightSpeed)*0.01);
-    //drive(speed, speed);
+  public void driveForward(double speed){
+    drive( speed + ( leftSpeed - rightSpeed ) * 0.01, speed - ( leftSpeed - rightSpeed ) * 0.01 );
   }
+
   public void resetEncoders(){
     leftEncoder.reset();
     rightEncoder.reset();
   }
+  
   public double getDistance(){
     return (-leftEncoder.getDistance() + rightEncoder.getDistance())/2;
   }
@@ -86,7 +89,6 @@ public class Drivetrain extends SubsystemBase {
   public Gyro getGyro(){
     return gyro;
   }
-
 }
 
 

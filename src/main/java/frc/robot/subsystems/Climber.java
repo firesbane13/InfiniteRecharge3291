@@ -17,11 +17,13 @@ public class Climber extends SubsystemBase {
   /**
    * Creates a new Climber.
    */
-  TalonSRX cim1 = new TalonSRX(Constants.cim1);
-  TalonSRX cim2 = new TalonSRX(Constants.cim2);
-  TalonSRX lightSaberMotor = new TalonSRX(Constants.lightSaberMotor);
+  TalonSRX cim1 = new TalonSRX(Constants.CIM_1);
+  TalonSRX cim2 = new TalonSRX(Constants.CIM_2);
+  TalonSRX lightSaberMotor = new TalonSRX(Constants.LIGHTSABER_MOTOR);
   public Climber() {
-
+    /*
+      Defined for future use
+     */
   }
 
   @Override

@@ -14,8 +14,6 @@ import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
-//import edu.wpi.first.wpilibj.util.Color;
-//import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.*;
@@ -32,19 +30,20 @@ public class ColorWheel extends SubsystemBase {
 
 
   public ColorWheel() {
-    colorEncoder = new Encoder(Constants.colorEncoder[0], Constants.colorEncoder[1]);
-    colorEncoder.setDistancePerPulse(1/(Constants.colorEncoderPPR*Constants.colorWheelFriction));
-    colorWheelMotor = new VictorSPX(Constants.colorWheelMotor);
-    colorMotor = new VictorSPX(Constants.colorMotor);
+    int[] colorEncoderConst = Constants.getColorEncoder();
+
+    colorEncoder = new Encoder(colorEncoderConst[0], colorEncoderConst[1]);
+    colorEncoder.setDistancePerPulse(1/(Constants.COLOR_ENCODER_PPR * Constants.COLOR_WHEEL_FRICTION));
+    colorWheelMotor = new VictorSPX(Constants.COLOR_WHEEL_MOTOR);
+    colorMotor = new VictorSPX(Constants.COLOR_MOTOR);
     wheelSensor = new ColorSensorV3(I2C.Port.kOnboard);
-    colorPid = new PIDController(Constants.kPColorMotor, Constants.kIColorMotor, Constants.kDColorMotor);
+    colorPid = new PIDController(Constants.K_PCOLOR_MOTOR, Constants.K_ICOLOR_MOTOR, Constants.K_DCOLOR_MOTOR);
   }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     System.out.println("R: " + wheelSensor.getRed() + " G: " + wheelSensor.getGreen() + " B: " +  wheelSensor.getBlue());
-    //System.out.println(colorEncoder.getDistance()/8);
-    //System.out.println(errorSum);
+    
     System.out.println(getColor());
   }
 
@@ -52,20 +51,21 @@ public class ColorWheel extends SubsystemBase {
     colorEncoder.reset();
   }
   private double getMaxRatio(int a, int b){
-    if(a ==0 || b==0){
+    if ( a == 0 || b == 0 ) {
       return 0;      
     }
-    if(a/b > b/a){
-      return a/b;
-    }else{
-      return b/a;
+
+    if ( ( a /b ) > ( b / a ) ){
+      return a / b;
+    } else {
+      return b / a;
     }
   }
   
   //Feedback PID Control 
   public double moveNumberOfColors(double numberOfColors){
     double error = colorPid.calculate(colorEncoder.getDistance(), numberOfColors);
-    //colorWheelMotor.set(ControlMode.PercentOutput, -(Constants.kPColorMotor*error));
+    
     colorWheelMotor.set(ControlMode.PercentOutput, error);
     return error;
   }
@@ -83,20 +83,22 @@ public class ColorWheel extends SubsystemBase {
     double rgRatio = getMaxRatio(r, g);
     double rbRatio = getMaxRatio(r, b);
     double gbRatio = getMaxRatio(g, b);
+    
     //if senses blue
-     if(gbRatio < rbRatio && gbRatio < rgRatio){
-      return Constants.yellowPos;
+    if (gbRatio < rbRatio && gbRatio < rgRatio) {
+      return Constants.YELLOW_POS;
     //if senses red
-    }else if(rgRatio < gbRatio && rgRatio < rbRatio && r > g){
-      return Constants.greenPos;
+    } else if (rgRatio < gbRatio && rgRatio < rbRatio && r > g) {
+      return Constants.GREEN_POS;
     //if senses yellow
-    }else if(rgRatio < gbRatio && rgRatio < rbRatio && r < g){
-      return Constants.redPos;
+    } else if (rgRatio < gbRatio && rgRatio < rbRatio && r < g) {
+      return Constants.RED_POS;
     //if senses green
-    }if(g > r && g > b && rbRatio  < rgRatio && rbRatio < gbRatio){
-      return Constants.bluePos;
+    } else if (g > r && g > b && rbRatio  < rgRatio && rbRatio < gbRatio) {
+      return Constants.BLUE_POS;
+    } else {
+      return 0;
     }
-    else return 0;
   }
   
 }

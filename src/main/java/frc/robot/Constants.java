@@ -18,76 +18,83 @@ package frc.robot;
 public final class Constants {
     /*Motor Ports*/
         //drivetrain
-        public static int rearLeftWheel = 3;
-        public static int frontLeftWheel = 2;
-        public static int rearRightWheel = 0;
-        public static int frontRightWheel = 1;
+        public static final int REAR_LEFT_WHEEL = 3;
+        public static final int FRONT_LEFT_WHEEL = 2;
+        public static final int REAR_RIGHT_WHEEL = 0;
+        public static final int FRONT_RIGHT_WHEEL = 1;
         //color wheel
-        public static int colorWheelMotor = 2;
-        public static int colorMotor = 1;
+        public static final int COLOR_WHEEL_MOTOR = 2;
+        public static final int COLOR_MOTOR = 1;
         //climber
-        public static int cim1 = 0;
-        public static int lightSaberMotor = 1;
-        public static int cim2 = 2;
+        public static final int CIM_1 = 0;
+        public static final int LIGHTSABER_MOTOR = 1;
+        public static final int CIM_2 = 2;
 
         //low goal
-        public static int lowGoal = 0;
+        public static final int LOW_GOAL = 0;
 
     /*PID Constants*/
         //Color Motor
-        public static double kPColorMotor = 5;
-        public static double kIColorMotor = 0;
-        public static double kDColorMotor = 0;
+        public static final double K_PCOLOR_MOTOR = 5;
+        public static final double K_ICOLOR_MOTOR = 0;
+        public static final double K_DCOLOR_MOTOR = 0;
         //Gyro
-        public static double kPGyro = 17.5;
-        public static double kIGyro = 0.0;
-        public static double kDGyro = 3.0;
+        public static final double K_PGYRO = 17.5;
+        public static final double K_IGYRO = 0.0;
+        public static final double K_DGYRO = 3.0;
         //Encoder
-        public static double kPDrive = 1;
-        public static double kIDrive = 1.0;
-        public static double kDDrive = 0;
+        public static final double K_PDRIVE = 1;
+        public static final double K_IDRIVE = 1.0;
+        public static final double K_DDRIVE = 0;
         //Camera
-        public static double kPCamera = 1;
-        public static double kICamera = 0;
-        public static double kDCamera = 0;
-
+        public static final double K_PCAMERA = 1;
+        public static final double K_ICAMERA = 0;
+        public static final double K_DCAMERA = 0;
 
     /*Sensor Ports*/
         //Gyro port
-        public static int gyro = 0;
+        public static final int GYRO = 0;
         
         //Encoder Ports
-        public static int[] colorEncoder = {4, 5};
-        public static int[] leftEncoder = {0, 1};
-        public static int[] rightEncoder = {2, 3};
-
+        protected static final int[] COLOR_ENCODER = {4, 5};
+        protected static final int[] LEFT_ENCODER = {0, 1};
+        protected static final int[] RIGHT_ENCODER = {2, 3};
 
     /*Joystick Ports*/
-        public static int Joystick1 = 1;
-        public static int Joystick2 = 0;
-        public static int Joystick3 = 2;
-        
+        public static final int JOYSTICK_1 = 1;
+        public static final int JOYSTICK_2 = 0;
+        public static final int JOYSTICK_3 = 2;
 
     /*Sensor Constants*/
         //Color Positions for order of color wheel
-        public static int redPos = 1;
-        public static int yellowPos = 2;
-        public static int bluePos = 3;
-        public static int greenPos = 4;
-        public static int numOfColors = 4;
+        public static final int RED_POS = 1;
+        public static final int YELLOW_POS = 2;
+        public static final int BLUE_POS = 3;
+        public static final int GREEN_POS = 4;
+        public static final int NUM_OF_COLORS = 4;
         
         //Number of colors on the color wheel
-        public static int numberOfWheelColors = 8;
+        public static final int NUMBER_OF_WHEEL_COLORS = 8;
         
         //Friction Constants
-        public static double colorWheelFriction = 1;
+        public static final double COLOR_WHEEL_FRICTION = 1;
         
         //Encoder Pulse Per Revolution
-        public static double colorEncoderPPR = 500;
-        public static double driveEncoderPPR = 360;
+        public static final double COLOR_ENCODER_PPR = 500;
+        public static final double DRIVE_ENCODER_PPR = 360;
         //Camera Image Dimensions
-        public static double width = 640;
-        public static double height = 480;
+        public static final double WIDTH = 640;
+        public static final double HEIGHT = 480;
 
+    public static int[] getColorEncoder() {
+        return COLOR_ENCODER;
+    }
 
+    public static int[] getLeftEncoder() {
+        return LEFT_ENCODER;
+    }
+
+    public static int[] getRightEncoder() {
+        return RIGHT_ENCODER;
+    }
 }

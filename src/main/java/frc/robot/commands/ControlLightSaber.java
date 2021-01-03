@@ -31,19 +31,16 @@ public class ControlLightSaber extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
- 
-
+    /*
+      Defined for future use
+     */
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double speed = joystick.getY()*0.8;
-    /*if(speed < -0.5){
-      speed = 0;
-    }else if(speed > maxSpeed){
-      speed = maxSpeed;
-    }*/
+
     climb.setLightSaberMotor(stallSpeed + speed);
   }
 

@@ -14,27 +14,31 @@ public class Climb extends CommandBase {
   /**
    * Creates a new Climb.
    */
-  Climber climb;
+  Climber climbObj;
+
   public Climb(Climber climb) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.climb = climb;
+    this.climbObj = climb;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    climb.setClimbMotors(0.5);
+    climbObj.setClimbMotors(0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    /*
+      Defined for future use
+     */
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    climb.setClimbMotors(0);
+    climbObj.setClimbMotors(0);
   }
 
   // Returns true when the command should end.

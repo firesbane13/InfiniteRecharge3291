@@ -24,15 +24,15 @@ public class TurnToColor extends CommandBase {
   int startPos;
   int distance;
   int absDistance;
-  Drivetrain m_drive;
+  Drivetrain mDrive;
   int time;
   boolean finished = false;
 
 
-  public TurnToColor(ColorWheel m_ColorWheel, Drivetrain drive) {
+  public TurnToColor(ColorWheel mColorWheel, Drivetrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
-    colorWheel = m_ColorWheel;
-    m_drive = drive;
+    colorWheel = mColorWheel;
+    mDrive = drive;
   }
 
   // Called when the command is initially scheduled.
@@ -40,57 +40,43 @@ public class TurnToColor extends CommandBase {
   public void initialize() {
     targetColor = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
     time = 0;
-    /*switch (targetColor){
-      case 'B' :
-      targetPos = Constants.bluePos;
-      break;
-    case 'G' :
-      targetPos = Constants.greenPos;
-      break;
-    case 'R' :
-      targetPos = Constants.redPos;
-      break;
-    case 'Y' :
-      targetPos = Constants.yellowPos;
-      break;
-    default :
-      cancel();
-      break;
-    }*/
     
-    targetPos = Constants.greenPos;
-    if(colorWheel.getColor() == 0){
+    targetPos = Constants.GREEN_POS;
+
+    if (colorWheel.getColor() == 0) {
       cancel();
-    }else{
+    } else {
       startPos = colorWheel.getColor();
     }
+
     distance = targetPos - startPos;
     absDistance = Math.abs(distance);
-    if(absDistance > Constants.numOfColors/2){
-      distance = -(absDistance/distance)*(Constants.numOfColors - absDistance);
+    
+    if (absDistance > Constants.NUM_OF_COLORS / 2 ) {
+      distance = -(absDistance/distance) * (Constants.NUM_OF_COLORS - absDistance);
     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
     double error = colorWheel.moveNumberOfColors(distance);
-    if(Math.abs(error) < 0.12){
+
+    if ( Math.abs(error) < 0.12 ) {
       time++;
     }
-    if(time >= 7){
+
+    if ( time >= 7 ){
       finished = true;
     }
-    /*if(error < 0.10){
-      cancel();
-    }*/
-    //m_drive.drive(-0.2, -0.2);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    /*
+      Defined for future use
+     */
   }
 
   // Returns true when the command should end.

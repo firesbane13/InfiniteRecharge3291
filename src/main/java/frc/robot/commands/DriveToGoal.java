@@ -26,14 +26,19 @@ public class DriveToGoal extends CommandBase {
   public DriveToGoal(Drivetrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.drive = drive;
+
     CameraServer.getInstance().startAutomaticCapture();
+    
     gripTable = NetworkTableInstance.getDefault().getTable("GRIP/mycontoursReport");
-    pidCamera = new PIDController(Constants.kPCamera, Constants.kICamera, Constants.kDCamera);
+    pidCamera = new PIDController(Constants.K_PCAMERA, Constants.K_ICAMERA, Constants.K_DCAMERA);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    /*
+      Defined for future use
+     */
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,16 +48,19 @@ public class DriveToGoal extends CommandBase {
     double[] areaArray = gripTable.getEntry("area").getDoubleArray(new double[0]);
     double max = -1;
     int maxIndex = -1;
-    for(int i = 0; i<areaArray.length; i++){
-      if(areaArray[i] > max){
+
+    for (int i = 0; i<areaArray.length; i++) {
+      if (areaArray[i] > max) {
         max = areaArray[i];
         maxIndex = i;
       }
     }
-    if(maxIndex > 0)
+
+    if (maxIndex > 0) {
       centerX = gripTable.getEntry("centerX").getDoubleArray(new double[0])[maxIndex];
+    }
     
-    double speed = -pidCamera.calculate(centerX, Constants.width/2)/Constants.width;
+    double speed = -pidCamera.calculate(centerX, Constants.WIDTH/2)/Constants.WIDTH;
     drive.drive(0.25 - speed, 0.25 + speed);
     
   }
@@ -60,6 +68,9 @@ public class DriveToGoal extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    /*
+      Defined for future use
+     */
   }
 
   // Returns true when the command should end.

@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -30,7 +30,7 @@ public class DriveForward extends CommandBase {
     this.drive = drive;
     this.distance = distance;
     this.maxPower = maxPower;
-    pidDrive = new PIDController(Constants.kPDrive, Constants.kIDrive, Constants.kDDrive);
+    pidDrive = new PIDController(Constants.K_PDRIVE, Constants.K_IDRIVE, Constants.K_DDRIVE);
     pidTurn = new PIDController(10, 2, 0);
     
   }
@@ -46,18 +46,21 @@ public class DriveForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    double turnSpeed = pidTurn.calculate(drive.getGyro().getAngle(), 0)/360;
-    double driveSpeed = pidDrive.calculate(drive.getDistance(), distance)/50;
-    if(Math.abs(driveSpeed) > maxPower){
-      driveSpeed = (Math.abs(driveSpeed)/ driveSpeed) * maxPower;
+    double turnSpeed = pidTurn.calculate( drive.getGyro().getAngle(), 0 ) / 360;
+    double driveSpeed = pidDrive.calculate( drive.getDistance(), distance ) / 50;
+    if ( Math.abs(driveSpeed) > maxPower ){
+      driveSpeed = ( Math.abs( driveSpeed ) / driveSpeed ) * maxPower;
     }
+
     System.out.println(driveSpeed);
+    
     drive.drive(driveSpeed - turnSpeed, driveSpeed + turnSpeed);
-    if(Math.abs(driveSpeed) < 0.12){
+    
+    if ( Math.abs( driveSpeed ) < 0.12 ) {
       time++;
     }
-    if(time >= 15){
+
+    if ( time >= 15 ) {
       finished = true;
     }
   }
@@ -66,6 +69,7 @@ public class DriveForward extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     drive.drive(0, 0);
+    
     Timer.delay(0.25);
   }
 

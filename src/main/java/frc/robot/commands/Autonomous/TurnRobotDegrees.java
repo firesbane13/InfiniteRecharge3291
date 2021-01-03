@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,24 +16,25 @@ public class TurnRobotDegrees extends CommandBase {
   /**
    * Creates a new AutoTest.
    */
-  private final Drivetrain m_drive;
+  private final Drivetrain mDrive;
   double desiredAngle;
   PIDController pidTurn;
   boolean finished = false;
   double maxPower;
   int time = 0;
+
   public TurnRobotDegrees(Drivetrain drive, double degrees, double maxPower) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_drive = drive;
+    mDrive = drive;
     desiredAngle = degrees;
-    pidTurn = new PIDController(Constants.kPGyro, Constants.kIGyro, Constants.kDGyro);
+    pidTurn = new PIDController(Constants.K_PGYRO, Constants.K_IGYRO, Constants.K_DGYRO);
     this.maxPower = maxPower;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drive.getGyro().reset();
+    mDrive.getGyro().reset();
     time = 0;
     
   }
@@ -42,19 +43,23 @@ public class TurnRobotDegrees extends CommandBase {
   @Override
   public void execute() {
     //
-    double turnSpeed = pidTurn.calculate(m_drive.getGyro().getAngle(), desiredAngle)/360;
+    double turnSpeed = pidTurn.calculate(mDrive.getGyro().getAngle(), desiredAngle) / 360;
+
     //Limits the max speed of the motor
-    if(Math.abs(turnSpeed) > maxPower){
+    if ( Math.abs(turnSpeed) > maxPower ){
       turnSpeed = (Math.abs(turnSpeed)/turnSpeed)*maxPower;
     }
+
     System.out.println(turnSpeed);
-    m_drive.drive(-turnSpeed, turnSpeed);
+    
+    mDrive.drive(-turnSpeed, turnSpeed);
 
     //Handles canceling the command when the error i
-    if(Math.abs(turnSpeed) < 0.12){
+    if ( Math.abs(turnSpeed) < 0.12 ) {
       time++;
     }
-    if(time >= 8){
+
+    if ( time >= 8 ) {
       finished = true;
     }
   }
@@ -62,7 +67,7 @@ public class TurnRobotDegrees extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drive.drive(0, 0); 
+    mDrive.drive(0, 0); 
     finished = false;
   }
 

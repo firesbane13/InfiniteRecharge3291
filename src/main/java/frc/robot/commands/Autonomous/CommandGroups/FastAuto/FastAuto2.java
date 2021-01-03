@@ -4,10 +4,10 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-package frc.robot.commands.Autonomous.CommandGroups.FastAuto;
+package frc.robot.commands.autonomous.commandgroups.fastauto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Autonomous.*;
+import frc.robot.commands.autonomous.*;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.LowGoal;
 
@@ -20,7 +20,6 @@ public class FastAuto2 extends SequentialCommandGroup {
    */
   public FastAuto2(Drivetrain drive, LowGoal dropper) {
     // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
     super(
       new TurnRobotDegrees(drive, 36.972, 0.75), 
       new DriveForward(drive, 112.5, 0.75),

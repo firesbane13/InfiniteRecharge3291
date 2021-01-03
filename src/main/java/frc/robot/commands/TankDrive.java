@@ -15,43 +15,36 @@ public class TankDrive extends CommandBase {
   /**
    * Creates a new TankDrive.
    */
-  private final Drivetrain m_drive;
+  private final Drivetrain mDrive;
 
   private final Joystick j1;
   private final Joystick j2;
 
-  public TankDrive(Drivetrain drive, Joystick m_j1, Joystick m_j2) {
+  public TankDrive(Drivetrain drive, Joystick mJ1, Joystick mJ2) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_drive = drive;
-    j1 = m_j1;
-    j2 = m_j2;
-    //addRequirements(drive);
+    mDrive = drive;
+    j1 = mJ1;
+    j2 = mJ2;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    /*
+      Defined for future use
+     */
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /*double rotateSpeed = m_drive.getGyro().getAngle()/360;
-    if(Math.abs(j1.getY() - j2.getY()) > 0.35){
-      m_drive.getGyro().reset();
-      m_drive.drive(j1.getY()*0.5, j2.getY()*0.5);
-    }else{
-
-      m_drive.drive((j1.getY() + rotateSpeed)*0.5, j2.getY() - rotateSpeed);
-      
-    }*/
-    m_drive.drive(j1.getY()*1, j2.getY()*1);
+    mDrive.drive( j1.getY() * 1, j2.getY() * 1 );
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drive.drive(0, 0);
+    mDrive.drive(0, 0);
   }
 
   // Returns true when the command should end.

@@ -17,9 +17,11 @@ public class LowGoal extends SubsystemBase {
   /**
    * Creates a new LowGoalShooter.
    */
-  VictorSPX dropMotor = new VictorSPX(Constants.lowGoal);
+  VictorSPX dropMotor = new VictorSPX(Constants.LOW_GOAL);
   public LowGoal() {
-    
+    /*
+      Defined for future use
+     */
   }
 
   @Override

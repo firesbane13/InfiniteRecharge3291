@@ -16,6 +16,7 @@ public class ReadyColorMotor extends InstantCommand {
    * Creates a new ReadyColorMotor.
    */
   ColorWheel color;
+
   public ReadyColorMotor(ColorWheel color) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.color = color;
@@ -25,7 +26,9 @@ public class ReadyColorMotor extends InstantCommand {
   @Override
   public void initialize() {
     color.turnColorMotor(-0.75);
+
     Timer.delay(1.5);
+    
     color.turnColorMotor(0);
   }
 

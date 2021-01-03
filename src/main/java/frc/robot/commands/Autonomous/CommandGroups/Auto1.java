@@ -5,10 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Autonomous.CommandGroups;
+package frc.robot.commands.autonomous.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Autonomous.*;
+import frc.robot.commands.autonomous.*;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.LowGoal;
 

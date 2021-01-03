@@ -22,12 +22,11 @@ public class RotateColorWheel extends CommandBase {
   double time;
   boolean finished = false;
 
-  
-  public RotateColorWheel(ColorWheel kColorWheel, Drivetrain m_drive,  double kNumberOfRotations) {
+  public RotateColorWheel(ColorWheel kColorWheel, Drivetrain mDrive,  double kNumberOfRotations) {
     // Use addRequirements() here to declare subsystem dependencies.
     colorWheel = kColorWheel;
     numberOfRotations = kNumberOfRotations;
-    drive = m_drive;
+    drive = mDrive;
     finished = false;
   }
 
@@ -36,16 +35,16 @@ public class RotateColorWheel extends CommandBase {
   public void initialize() {
     finished = false;
     colorWheel.resetEncoder();
-    time = 0;
-    //colorWheel.moveColorMotor(-0.1);
-    
+    time = 0;    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double error = colorWheel.moveNumberOfColors(Constants.numberOfWheelColors*numberOfRotations);
+    double error = colorWheel.moveNumberOfColors(Constants.NUMBER_OF_WHEEL_COLORS * numberOfRotations);
+    
     System.out.println(error);
+
     if(Math.abs(error) < 0.12){
       time++;
     }

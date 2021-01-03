@@ -5,15 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.autonomous;
 
 /**
  * Add your docs here.
  */
 public enum AutoEnum {
-    FlexAuto(1),
-    StraightAuto(2);
+    FLEX_AUTO(1),
+    STRAIGHT_AUTO(2);
     int value;
+    
     private AutoEnum(int value){
         this.value = value;
     }
